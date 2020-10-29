@@ -57,10 +57,11 @@ const transformSwagger = async (
       `;
 
       // 权限jwt注释
-      apiText += pro.addJwt(itemApiData[itemKey].security, {
-        ...defaultOpts,
-        bearer: securityDefinitions!.bearer,
-      });
+      // apiText += pro.addJwt(itemApiData[itemKey].security, {
+      //   ...defaultOpts,
+      //   bearer: securityDefinitions!.Bearer,
+      // });
+      // console.log(securityDefinitions!.bearer);
       apiText += pro.addApiGroup(itemApiData[itemKey].tags); // 接口分类
       // 请求参数生成
       apiText += pro.addApiParam(itemApiData[itemKey].parameters);

@@ -39,17 +39,17 @@ class Processing {
   }
 
   // 生成jwt信息
-  addJwt = (securityArr = [], opts) => {
-    let newText = '';
-    const jwtDes = opts.jwtDes || '登录、注册接口返回的jwt';
-    const jwtName = opts.jwt || opts.bearer.name || 'jwt';
-    // 带有指定bearer字段才添加jwt信息
-    const addFlag = securityArr.some(item => item.bearer);
-    if (addFlag) {
-      newText += `* @apiHeader {String} ${jwtName} ${jwtDes}\n`;
-    }
-    return newText;
-  }
+  // addJwt = (securityArr = [], opts) => {
+  //   let newText = '';
+  //   const jwtDes = opts.jwtDes || '登录、注册接口返回的jwt';
+  //   const jwtName = opts.jwt ||  ( opts.bearer.name) || 'jwt';
+  //   // 带有指定bearer字段才添加jwt信息
+  //   const addFlag = securityArr.some(item => item.bearer);
+  //   if (addFlag) {
+  //     newText += `* @apiHeader {String} ${jwtName} ${jwtDes}\n`;
+  //   }
+  //   return newText;
+  // }
 
   // 生成组标签
   addApiGroup = (tags: string[] = []) => {
