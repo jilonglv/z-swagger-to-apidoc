@@ -39,17 +39,18 @@ class Processing {
   }
 
   // 生成jwt信息
-  // addJwt = (securityArr = [], opts) => {
-  //   let newText = '';
-  //   const jwtDes = opts.jwtDes || '登录、注册接口返回的jwt';
-  //   const jwtName = opts.jwt ||  ( opts.bearer.name) || 'jwt';
-  //   // 带有指定bearer字段才添加jwt信息
-  //   const addFlag = securityArr.some(item => item.bearer);
-  //   if (addFlag) {
-  //     newText += `* @apiHeader {String} ${jwtName} ${jwtDes}\n`;
-  //   }
-  //   return newText;
-  // }
+  addJwt = (securityArr = [], opts) => {
+    let newText = '';
+    opts={};
+    var jwtDes = opts.jwtDes || opts.bearer?.description || '登录接口返回的jwt';//登录、注册接口返回的jwt
+    const jwtName = opts.jwt ||  ( opts.bearer.name) || 'Authorization';
+    // 带有指定bearer字段才添加jwt信息
+    const addFlag = securityArr.some(item => (item.bearer||item.Bearer));
+    if (addFlag) {
+      newText += `* @apiHeader {String} ${jwtName} ${jwtDes}\n`;
+    }
+    return newText;
+  }
 
   // 生成组标签
   addApiGroup = (tags: string[] = []) => {
@@ -147,9 +148,11 @@ class Processing {
 
   // 处理映射类生成文档注释（文档注释前缀、映射的名称、数据字典、递归的字段文档前缀）
   handleSchemaDef = (apidocName, opts) => {
-    const { defName, oldMergeDefName, oldDes } = opts;
-    const { type, properties, required } = this.definitions[defName]; // 当前类结构
     let mergeApiParam = '';
+    const { defName, oldMergeDefName, oldDes } = opts;
+    if(defName==undefined)
+      return mergeApiParam;
+    const { type, properties, required } = this.definitions[defName]; // 当前类结构
     const fieldReqired = {};
 
     // 必填字段处理
